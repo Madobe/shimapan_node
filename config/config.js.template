@@ -1,0 +1,43 @@
+const config = {
+  token: "",
+  ownerID: "",
+  defaults: {
+    prefix: "!",
+  },
+
+  permLevels: [
+    // Just your everyday common user
+    {
+      level: 1,
+      name: "User",
+      check: () => true
+    },
+    // A moderator
+    {
+      level: 2,
+      name: "Moderator",
+      check: (message) => {
+        try {
+          const modList = message.client.modlist.get(message.guild.id);
+          if(modList.includes(message.author.id)) return true;
+        } catch(e) {
+          return false;
+        }
+      }
+    },
+    // A server owner
+    {
+      level: 3,
+      name: "Server Owner",
+      check: (message) => message.channel.type === "text" ? (message.guild.owner.user.id === message.author.id ? true : false) : false
+    },
+    // The bot owner
+    {
+      level: 4,
+      name: "Bot Owner",
+      check: (message) => message.client.config.ownerID === message.author.id
+    }
+  ]
+};
+
+module.exports = config;

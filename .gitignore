@@ -1,0 +1,4 @@
+config/config.js
+data/
+*.swp
+*.DS_Store
