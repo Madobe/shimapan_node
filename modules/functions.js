@@ -50,6 +50,10 @@ module.exports = (client) => {
     console.log(`[${type || "Log"}] ${message}`);
   };
 
+  client.clamp = (num, min, max) => {
+    return num <= min ? min : num >= max ? max : num;
+  };
+
   // Give information about uncaught stuff
   process.on("uncaughtException", (err) => {
     const errorMsg = err.stack.replace(new RegExp(`${__dirname}/`, "g"), "./");

@@ -10,8 +10,9 @@ exports.run = async (client, message, args) => {
       delete require.cache[require.resolve(`../commands/${file}`)];
       const props = require(`../commands/${file}`);
       client.commands.set(props.info.name, props);
+      client.log(`Reloaded ${props.info.name}`);
     } catch(e) {
-      client.log(`Failed to reload command in file: ${file}`);
+      client.log(`Failed reload in ${file}: ${e}`);
     }
   });
 

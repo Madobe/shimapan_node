@@ -31,7 +31,7 @@ const init = async () => {
       const props = require(`./commands/${file}`);
       client.commands.set(props.info.name, props);
     } catch(e) {
-      client.log(`Failed to load command in file: ${file}`);
+      client.log(`Failed to load ${file}: ${e}`);
     }
   });
 
