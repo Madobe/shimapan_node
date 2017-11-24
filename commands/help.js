@@ -1,5 +1,5 @@
 exports.run = async (client, message, args) => {
-  message.channel.send("https://github.com/Madobe/shimapan/wiki/")
+  message.channel.send("https://github.com/Madobe/shimapan/wiki/");
 };
 
 exports.conf = {

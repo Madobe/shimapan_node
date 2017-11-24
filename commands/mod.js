@@ -27,7 +27,7 @@ exports.run = async (client, message, [action, ...ids]) => {
       message.channel.send("The specified IDs were removed from the list, assuming they were present.");
       break;
     case "list":
-      output = "```\n";
+      let output = "```\n";
       modList.forEach(id => {
         const member = client.users.get(id);
         output += member ? `${member.tag} (ID:${id})\n` : `Invalid (ID:${id})\n`;

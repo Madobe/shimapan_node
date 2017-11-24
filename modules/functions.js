@@ -28,18 +28,40 @@ module.exports = (client) => {
   };
 
   // Remove code blocks and pings from given text
-  client.clean = async (client, text) => {
-    if (text && text.constructor.name == "Promise")
-      text = await text;
-    if (typeof evaled !== "string")
-      text = require("util").inspect(text, {depth: 0});
-
+  client.clean = (client, text) => {
     text = text
       .replace(/`/g, "`" + String.fromCharCode(8203))
       .replace(/@/g, "@" + String.fromCharCode(8203))
       .replace(client.token, "mfa.VkO_2G4Qv3T--NO--lWetW_tjND--TOKEN--QFTm6YGtzq9PH--4U--tG0");
 
     return text;
+  };
+
+  // Takes something like 80m and converts it to 80 minutes in milliseconds
+  client.convertToMilliseconds = (time) => {
+    const multipliers = {
+      d: 60 * 60 * 24 * 1000,
+      h: 60 * 60 * 1000,
+      m: 60 * 1000,
+      s: 1000
+    };
+    if(!Number(time.slice(0, -1)) || !multipliers[time.slice(-1)]) return "Invalid time unit. Please provide a time with s, m, h or d.";
+    time = Number(time.slice(0, -1)) * multipliers[time.slice(-1)];
+
+    return time;
+  }
+
+  // Milliseconds to humanized time
+  client.humanizeTime = (time) => {
+    let output = "";
+    time /= 1000;
+    const divisors = [86400, "days", 3600, "hours", 60, "minutes", 1, "seconds"];
+    for(let i = 0; time >= 0; i += 2) {
+      const amount = time / divisors[i];
+      time %= divisors[i];
+      if(amount >= 1) output += `${amount} ${divisors[i + 1]}, `;
+    }
+    return output.slice(0, -2);
   };
 
   // await client.wait(1000); Stop for a second.

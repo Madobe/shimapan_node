@@ -19,6 +19,8 @@ client.commands = new Enmap();
 client.customCommands = new Enmap({provider: new EnmapLevel({name: "customcommands"})});
 client.settings = new Enmap({provider: new EnmapLevel({name: "settings"})});
 client.modlist = new Enmap({provider: new EnmapLevel({name: "modlist"})});
+client.mutes = new Enmap({provider: new EnmapLevel({name: "mutes"})});
+client.punishments = new Enmap({provider: new EnmapLevel({name: "punishments"})});
 client.fakePermLevels = new Enmap();
 
 const init = async () => {
