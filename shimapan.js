@@ -22,6 +22,7 @@ client.modlist = new Enmap({provider: new EnmapLevel({name: "modlist"})});
 client.mutes = new Enmap({provider: new EnmapLevel({name: "mutes"})});
 client.punishments = new Enmap({provider: new EnmapLevel({name: "punishments"})});
 client.nameRecord = new Enmap({provider: new EnmapLevel({name: "namerecord"})});
+client.usernameRecord = new Enmap({provider: new EnmapLevel({name: "usernamerecord"})});
 client.fakePermLevels = new Enmap();
 
 // Load the logger stuff (which depends on the enmaps above)

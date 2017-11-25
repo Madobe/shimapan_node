@@ -4,4 +4,5 @@ module.exports = (client, guild) => {
   client.modlist.set(guild.id, []);
   client.mutes.set(guild.id, []);
   client.punishments.set(guild.id, []);
+  client.nameRecord.set(g.id, {});
 };

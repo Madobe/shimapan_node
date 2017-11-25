@@ -6,6 +6,13 @@ module.exports = (client, oldMember, newMember) => {
       newMember.guild,
       `:id: **${newMember.user.username}** (ID:${newMember.id}) changed nicknames from **${oldMember.nickname || "none"}** to **${newMember.nickname || "none"}**`
     );
+
+    // For the !names command
+    const nameRecord = client.nameRecord.get(newMember.guild.id);
+    if(!nameRecord[newMember.id]) nameRecord[newMember.id] = [];
+    nameRecord[newMember.id].push(newMember.nickname || "none");
+    if(nameRecord[newMember.id].length > 20) nameRecord[newMember.id].shift();
+    client.nameRecord.set(newMember.guild.id, nameRecord);
   } else if(!oldMember.roles.equals(newMember.roles)) {
     let larger, smaller, operation;
     if(oldMember.roles.size > newMember.roles.size) {

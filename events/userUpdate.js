@@ -10,5 +10,11 @@ module.exports = (client, oldUser, newUser) => {
         `:id: **${oldUser.username}** (ID:${oldUser.id}) changes usernames to **${newUser.username}**`
       );
     });
+
+    // For the !names command
+    const usernameRecord = client.usernameRecord.get(newUser.id) || [];
+    usernameRecord.push(newUser.username);
+    if(usernameRecord.length > 20) usernameRecord.shift();
+    client.usernameRecord.set(newUser.id, usernameRecord);
   }
 };
