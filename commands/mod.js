@@ -9,6 +9,7 @@ exports.run = async (client, message, [action, ...ids]) => {
     case "add":
       let added = [];
       ids.forEach(id => {
+        id = id.replace(/\D/g, '');
         if(modList.includes(id)) return;
         modList.push(id);
         added.push(id);

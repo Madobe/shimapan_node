@@ -1,4 +1,5 @@
 module.exports = (client, oldMember, newMember) => {
+  if(!client.allowedToLog({guild: newMember.guild}, ["v"], [newMember.id])) return;
   if(oldMember.voiceChannel === newMember.voiceChannel) return;
   if(!newMember.voiceChannel) {
     return client.servlog(

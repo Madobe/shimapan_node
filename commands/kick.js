@@ -3,6 +3,7 @@ exports.run = async (client, message, [memberID, ...reason]) => {
   memberID = memberID.replace(/\D/g, '');
   const member = message.guild.members.get(memberID);
   if(!member) message.channel.send("Invalid user specified.");
+  if(client.isMod(message.guild, member.id)) return message.channel.send(`**${member.user.username}** cannot be kicked because they are a moderator.`);
   member.kick(reason.join(" "));
   message.channel.send(`<@${member.id}> was kicked from the server.`);
 

@@ -1,5 +1,6 @@
 module.exports = (client, message) => {
   if(message.author.bot) return;
+  if(!client.allowedToLog(message, ["d", "c"], [message.author.id, message.channel.id])) return;
   client.servlog(
     client,
     message.guild,

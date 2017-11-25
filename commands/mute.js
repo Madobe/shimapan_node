@@ -9,6 +9,8 @@ exports.run = async (client, message, [memberID, time, ...reason]) => {
   const member = message.guild.members.get(memberID);
   if(!member) return message.channel.send("Invalid user specified.");
 
+  if(client.isMod(message.guild, member.id)) return message.channel.send(`**${member.user.username}** cannot be muted because they are a moderator.`);
+
   time = client.convertToMilliseconds(time);
 
   member.addRole(settings["mute_role"]);

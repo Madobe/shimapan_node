@@ -3,6 +3,10 @@ exports.run = async (client, message, [memberID, days, ...reason]) => {
   if(Number(days) == NaN) return message.channel.send("You must specify how many days of the user-to-ban's messages should be deleted when they are banned.");
   memberID = memberID.replace(/\D/g, '');
   const member = message.guild.members.get(memberID);
+  if(!member) return message.channel.send("Invalid user specified.");
+
+  if(client.isMod(message.guild, member.id)) return message.channel.send(`**${member.user.username}** cannot be banned because they are a moderator.`);
+
   member.ban({
     days: days,
     reason: reason.join(" ")

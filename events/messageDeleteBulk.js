@@ -1,5 +1,6 @@
 module.exports = (client, messages) => {
   if(messages.first().author.bot) return;
+  if(!client.allowedToLog(messages.first(), ["d"], [messages.first().author.id])) return;
 
   // Prevent double firing of this event from causing two uploads like keeps on happening
   if(client.bulkDeleteLock == messages.first().id) return;

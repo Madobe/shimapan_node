@@ -31,6 +31,26 @@ require("./modules/logger.js")(client);
 const fs = require("fs");
 if(!fs.existsSync("./temp")) fs.mkdirSync("./temp");
 
+const muteTimer = async () => {
+  client.guilds.forEach(guild => {
+    const settings = client.settings.get(guild.id);
+
+    const muteList = client.mutes.get(guild.id);
+    const expiredMutes = muteList.filter(entry => entry.time < Date.now());
+    expiredMutes.forEach(entry => {
+      guild.members.get(entry.user).removeRole(settings["mute_role"]);
+    });
+    client.mutes.set(guild.id, muteList.filter(entry => entry.time >= Date.now()));
+
+    const punishList = client.punishments.get(guild.id);
+    const expiredPunishments = punishList.filter(entry => entry.time < Date.now());
+    expiredPunishments.forEach(entry => {
+      guild.members.get(entry.user).removeRole(settings["punish_role"]);
+    });
+    client.punishments.set(guild.id, punishList.filter(entry => entry.time >= Date.now()));
+  });
+};
+
 const init = async () => {
   // Load commands
   const cmdFiles = await readdir("./commands/");
@@ -62,6 +82,8 @@ const init = async () => {
   }
 
   client.login(client.config.token);
+
+  setInterval(muteTimer, 5000);
 };
 
 init();

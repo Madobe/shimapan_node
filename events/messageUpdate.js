@@ -1,5 +1,6 @@
 module.exports = (client, oldMessage, newMessage) => {
   if(newMessage.author.bot) return;
+  if(!client.allowedToLog(newMessage, ["e", "c"], [newMessage.author.id, newMessage.channel.id])) return;
   if(oldMessage.content === newMessage.content) return;
   client.servlog(
     client,
