@@ -11,6 +11,13 @@ exports.run = async (client, message, args) => {
   client.mutes.set(message.guild.id, muteList);
 
   message.channel.send(`**${member.user.username}** has been unmuted.`);
+
+  if(!client.allowedToLog(message, ["m"], [member.id])) return;
+  client.modlog(
+    client,
+    message.guild,
+    `:large_blue_circle: **${message.author.username}** (ID:${message.author.id}) unmuted **${member.user.username}** (ID:${member.id})`
+  );
 };
 
 exports.conf = {

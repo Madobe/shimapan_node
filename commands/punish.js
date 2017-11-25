@@ -18,6 +18,13 @@ exports.run = async (client, message, [memberID, time, ...reason]) => {
   client.punishments.set(message.guild.id, punishList);
 
   message.channel.send(`**${member.user.username}** was punished for ${client.humanizeTime(time)}.`);
+
+  if(!client.allowedToLog(message, ["p"], [member.id])) return;
+  client.modlog(
+    client,
+    message.guild,
+    `:black_circle: **${message.author.username}** (ID:${message.author.id}) punished **${member.user.username}** (ID:${member.id}) for ${client.humanizeTime(time)} for ${reason.join(" ")}`
+  );
 };
 
 exports.conf = {

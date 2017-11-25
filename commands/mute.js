@@ -18,6 +18,13 @@ exports.run = async (client, message, [memberID, time, ...reason]) => {
   client.mutes.set(message.guild.id, muteList);
 
   message.channel.send(`**${member.user.username}** was muted for ${client.humanizeTime(time)}.`);
+
+  if(!client.allowedToLog(message, ["m"], [member.id])) return;
+  client.modlog(
+    client,
+    message.guild,
+    `:red_circle: **${message.author.username}** (ID:${message.author.id}) muted **${member.user.username}** (ID:${member.id}) for ${client.humanizeTime(time)} for ${reason.join(" ")}`
+  );
 };
 
 exports.conf = {

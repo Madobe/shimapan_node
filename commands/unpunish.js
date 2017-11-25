@@ -11,6 +11,13 @@ exports.run = async (client, message, args) => {
   client.punishments.set(message.guild.id, punishList);
 
   message.channel.send(`${member.user.tag} has been unpunished.`);
+
+  if(!client.allowedToLog(message, ["p"], [member.id])) return;
+  client.modlog(
+    client,
+    message.guild,
+    `:large_blue_circle: **${message.author.username}** (ID:${message.author.id}) unpunished **${member.user.username}** (ID:${member.id})`
+  );
 };
 
 exports.conf = {

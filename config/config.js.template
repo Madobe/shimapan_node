@@ -5,6 +5,14 @@ const config = {
     prefix: "!",
   },
 
+  allowedSettings: [
+    "mute_role",
+    "punish_role",
+    "serverlog_channel",
+    "absence_channel",
+    "modlog_channel"
+  ],
+
   permLevels: [
     // Just your everyday common user
     {

@@ -8,6 +8,14 @@ exports.run = async (client, message, [memberID, days, ...reason]) => {
     reason: reason.join(" ")
   });
   message.channel.send(`<@${memberID}> was banned from the server.`);
+
+  // Modlog entry
+  if(!client.allowedToLog(message, ["b"], [memberID])) return;
+  client.modlog(
+    client,
+    message.guild,
+    `:hammer: **${message.author.username}** (ID:${message.author.id}) banned **${member.user.username}** (ID:${member.id}) from the server.`
+  );
 };
 
 exports.conf = {

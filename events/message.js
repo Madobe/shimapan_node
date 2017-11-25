@@ -24,9 +24,9 @@ module.exports = (client, message) => {
 
       cmd.run(client, message, args);
     } else {
-      const cc = client.customCommands.get(command);
-      if(!cc) return;
-      message.channel.send(cc);
+      const coms = client.customCommands.get(message.guild.id);
+      if(!coms[command]) return;
+      message.channel.send(coms[command]);
     }
   }
 };

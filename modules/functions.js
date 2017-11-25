@@ -27,10 +27,21 @@ module.exports = (client) => {
     return permLevel;
   };
 
+  // Check whether the logging is allowed or not
+  client.allowedToLog = (message, modifiers, ids) => {
+    if(modifiers.length < 1 || ids.length < 1) return false;
+    const settings = client.settings.get(message.guild.id);
+    for(let i = 0; i < settings["logging"].length; i++) {
+      const setting = settings["logging"][i];
+      if(!setting.allow && modifiers.includes(setting.type) && (ids.includes(setting.id) || setting.id == 0)) return false;
+    }
+    return true;
+  };
+
   // Remove code blocks and pings from given text
   client.clean = (text) => {
     text = text
-      .replace(/`/g, "`" + String.fromCharCode(8203))
+      .replace(/`/g, "\`")
       .replace(/@/g, "@" + String.fromCharCode(8203))
 
     return text;
