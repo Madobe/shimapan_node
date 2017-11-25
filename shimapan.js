@@ -21,7 +21,14 @@ client.settings = new Enmap({provider: new EnmapLevel({name: "settings"})});
 client.modlist = new Enmap({provider: new EnmapLevel({name: "modlist"})});
 client.mutes = new Enmap({provider: new EnmapLevel({name: "mutes"})});
 client.punishments = new Enmap({provider: new EnmapLevel({name: "punishments"})});
+client.nameRecord = new Enmap({provider: new EnmapLevel({name: "namerecord"})});
 client.fakePermLevels = new Enmap();
+
+// Load the logger stuff (which depends on the enmaps above)
+require("./modules/logger.js")(client);
+
+const fs = require("fs");
+if(!fs.existsSync("./temp")) fs.mkdirSync("./temp");
 
 const init = async () => {
   // Load commands

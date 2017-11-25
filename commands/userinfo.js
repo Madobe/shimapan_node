@@ -19,13 +19,15 @@ exports.run = async (client, message, args) => {
   joinOrder[index] = `**${user.tag}**`;
   joinOrder = joinOrder.slice(client.clamp(index - 3, 0, index), index + 3);
 
-  message.channel.send(`**${user.username}**#${user.discriminator} (ID:**${user.id}**)
+  message.channel.send(client.clean(
+`**${user.username}**#${user.discriminator} (ID:**${user.id}**)
 » **Nickname**: ${member.displayName}
-» **Roles**: ${member.roles.map(role => role.name).join(", ").replace(/@/g, "@" + String.fromCharCode(8203))}
+» **Roles**: ${member.roles.filter(r => r.name !== "@everyone").map(r => r.name).join(", ")}
 » **Account Creation**: ${user.createdAt.toUTCString()}
 » **Join Date**: ${member.joinedAt.toUTCString()}
 » **Join Order**: ${joinOrder.join(" > ")}
-» **Avatar**: ${user.avatarURL}`);
+» **Avatar**: ${user.avatarURL}`
+));
 };
 
 exports.conf = {

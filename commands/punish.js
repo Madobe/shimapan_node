@@ -17,7 +17,7 @@ exports.run = async (client, message, [memberID, time, ...reason]) => {
   punishList.push({user: member.id, time: Date.now() + time});
   client.punishments.set(message.guild.id, punishList);
 
-  message.channel.send(`${member.user.tag} was punished for ${client.humanizeTime(time)}.`);
+  message.channel.send(`**${member.user.username}** was punished for ${client.humanizeTime(time)}.`);
 };
 
 exports.conf = {

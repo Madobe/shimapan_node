@@ -1,4 +1,5 @@
 config/config.js
 data/
+temp/
 *.swp
 *.DS_Store

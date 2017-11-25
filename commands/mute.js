@@ -17,7 +17,7 @@ exports.run = async (client, message, [memberID, time, ...reason]) => {
   muteList.push({user: member.id, time: Date.now() + time});
   client.mutes.set(message.guild.id, muteList);
 
-  message.channel.send(`${member.user.tag} was muted for ${client.humanizeTime(time)}.`);
+  message.channel.send(`**${member.user.username}** was muted for ${client.humanizeTime(time)}.`);
 };
 
 exports.conf = {

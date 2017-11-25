@@ -28,11 +28,10 @@ module.exports = (client) => {
   };
 
   // Remove code blocks and pings from given text
-  client.clean = (client, text) => {
+  client.clean = (text) => {
     text = text
       .replace(/`/g, "`" + String.fromCharCode(8203))
       .replace(/@/g, "@" + String.fromCharCode(8203))
-      .replace(client.token, "mfa.VkO_2G4Qv3T--NO--lWetW_tjND--TOKEN--QFTm6YGtzq9PH--4U--tG0");
 
     return text;
   };
@@ -62,6 +61,16 @@ module.exports = (client) => {
       if(amount >= 1) output += `${amount} ${divisors[i + 1]}, `;
     }
     return output.slice(0, -2);
+  };
+
+  // Makes an HH:MM:SS timestamp
+  client.timestamp = (time) => {
+    if(!time) time = new Date();
+    const hours = "0" + time.getUTCHours();
+    const minutes = "0" + time.getUTCMinutes();
+    const seconds = "0" + time.getUTCSeconds();
+    const timestamp = `\`[${hours.slice(-2)}:${minutes.slice(-2)}:${seconds.slice(-2)}]\` `;
+    return timestamp;
   };
 
   // await client.wait(1000); Stop for a second.

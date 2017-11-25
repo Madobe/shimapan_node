@@ -10,7 +10,7 @@ exports.run = async (client, message, args) => {
   muteList = muteList.filter(entry => entry.user !== member.id);
   client.mutes.set(message.guild.id, muteList);
 
-  message.channel.send(`${member.user.tag} has been unmuted.`);
+  message.channel.send(`**${member.user.username}** has been unmuted.`);
 };
 
 exports.conf = {
