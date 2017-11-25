@@ -1,0 +1,30 @@
+{
+  "name": "shimapan_node",
+  "version": "2.0.0",
+  "description": "A Discord moderation bot.",
+  "main": "node shimapan.js",
+  "dependencies": {
+    "discord.js": "^11.2.1",
+    "enmap": "^0.4.2",
+    "enmap-level": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node shimapan.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Madobe/shimapan_node.git"
+  },
+  "keywords": [
+    "discord.js",
+    "bot"
+  ],
+  "author": "Madobe",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/Madobe/shimapan_node/issues"
+  },
+  "homepage": "https://github.com/Madobe/shimapan_node"
+}
