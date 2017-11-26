@@ -23,6 +23,7 @@ client.mutes = new Enmap({provider: new EnmapLevel({name: "mutes"})});
 client.punishments = new Enmap({provider: new EnmapLevel({name: "punishments"})});
 client.nameRecord = new Enmap({provider: new EnmapLevel({name: "namerecord"})});
 client.usernameRecord = new Enmap({provider: new EnmapLevel({name: "usernamerecord"})});
+client.voiceChannels = new Enmap({provider: new EnmapLevel({name: "voicechannels"})});
 client.fakePermLevels = new Enmap();
 
 // Load the logger stuff (which depends on the enmaps above)
@@ -31,7 +32,7 @@ require("./modules/logger.js")(client);
 const fs = require("fs");
 if(!fs.existsSync("./temp")) fs.mkdirSync("./temp");
 
-const muteTimer = async () => {
+const constantTimer = async () => {
   client.guilds.forEach(guild => {
     const settings = client.settings.get(guild.id);
 
@@ -48,6 +49,18 @@ const muteTimer = async () => {
       guild.members.get(entry.user).removeRole(settings["punish_role"]);
     });
     client.punishments.set(guild.id, punishList.filter(entry => entry.time >= Date.now()));
+
+    const voiceChannels = client.voiceChannels.get(guild.id);
+    for(const i in voiceChannels) {
+      const props = voiceChannels[i];
+      const channel = guild.channels.get(props.id);
+      if(channel.members.size > 0) return props.time = Date.now() + 30000;
+      if(props.time < Date.now()) {
+        channel.delete().catch(console.error);
+        voiceChannels.splice(i, 1);
+      }
+    });
+    client.voiceChannels.set(guild.id, voiceChannels);
   });
 };
 
@@ -83,7 +96,7 @@ const init = async () => {
 
   client.login(client.config.token);
 
-  setInterval(muteTimer, 5000);
+  setInterval(constantTimer, 5000);
 };
 
 init();

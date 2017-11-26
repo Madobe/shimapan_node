@@ -19,6 +19,7 @@ module.exports = (client) => {
   client.allowedToLog = (message, modifiers, ids) => {
     if(modifiers.length < 1 || ids.length < 1) return false;
     const settings = client.settings.get(message.guild.id);
+    if(!settings["logging"]) return true;
     for(let i = 0; i < settings["logging"].length; i++) {
       const setting = settings["logging"][i];
       if(!setting.allow && modifiers.includes(setting.type) && (ids.includes(setting.id) || setting.id == 0)) return false;

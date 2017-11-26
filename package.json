@@ -4,7 +4,7 @@
   "description": "A Discord moderation bot.",
   "main": "node shimapan.js",
   "dependencies": {
-    "discord.js": "^11.2.1",
+    "discord.js": "https://github.com/hydrabolt/discord.js.git#11.3-dev",
     "enmap": "^0.4.2",
     "enmap-level": "^1.0.0"
   },
