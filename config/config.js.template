@@ -10,7 +10,8 @@ const config = {
     "punish_role",
     "serverlog_channel",
     "absence_channel",
-    "modlog_channel"
+    "modlog_channel",
+    "announcements_channel"
   ],
 
   permLevels: [
