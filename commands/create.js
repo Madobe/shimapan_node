@@ -54,10 +54,14 @@ exports.run = async (client, message, args) => {
     }
   ]);
 
-  channel.edit({name: channelName, bitrate: 64000, userLimit: optionValues["max"] ? Number(optionValues["max"][0]) : 0});
-  channel.createInvite().then(invite => {
-    message.channel.send(`Created ${channelName}. It will be removed after 30 seconds of inactivity. Invite link to voice channel: ${invite.url}`);
-  });
+  try {
+    channel.edit({name: channelName, bitrate: 64000, userLimit: optionValues["max"] ? Number(optionValues["max"][0]) : 0});
+    channel.createInvite().then(invite => {
+      message.channel.send(`Created ${channelName}. It will be removed after 30 seconds of inactivity. Invite link to voice channel: ${invite.url}`);
+    });
+  } catch(e) {
+    client.log(e);
+  }
 
   const voiceChannels = client.voiceChannels.get(message.guild.id);
   voiceChannels.push({
