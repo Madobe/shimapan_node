@@ -32,7 +32,7 @@ exports.run = async (client, message, args) => {
   if(optionValues["locked"] !== undefined) denyPerms += 1048576;
   if(optionValues["muted"] !== undefined) denyPerms += 2097152;
 
-  message.guild.createChannel(channelName, "voice", [
+  const channel = await message.guild.createChannel(channelName, "voice", [
     // @everyone
     {
       id: message.guild.id,
@@ -52,23 +52,20 @@ exports.run = async (client, message, args) => {
       type: "member",
       allow: 22021136
     }
-  ])
-  .then(channel => {
-    channel.edit({name: channelName, bitrate: 64000, userLimit: optionValues["max"] ? Number(optionValues["max"][0]) : 0});
-  })
-  .then(channel => {
-    channel.createInvite().then(invite => {
-      message.channel.send(`Created ${channelName}. It will be removed after 30 seconds of inactivity. Invite link to voice channel: ${invite.url}`);
-    });
-    const voiceChannels = client.voiceChannels.get(message.guild.id);
-    voiceChannels.push({
-      id: channel.id,
-      user: message.author.id,
-      time: Date.now() + 30000
-    });
-    client.voiceChannels.set(message.guild.id, voiceChannels);
-  })
-  .catch(console.error);
+  ]);
+
+  channel.edit({name: channelName, bitrate: 64000, userLimit: optionValues["max"] ? Number(optionValues["max"][0]) : 0});
+  channel.createInvite().then(invite => {
+    message.channel.send(`Created ${channelName}. It will be removed after 30 seconds of inactivity. Invite link to voice channel: ${invite.url}`);
+  });
+
+  const voiceChannels = client.voiceChannels.get(message.guild.id);
+  voiceChannels.push({
+    id: channel.id,
+    user: message.author.id,
+    time: Date.now() + 30000
+  });
+  client.voiceChannels.set(message.guild.id, voiceChannels);
 };
 
 exports.conf = {
